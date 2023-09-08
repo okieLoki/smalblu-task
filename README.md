@@ -1,3 +1,5 @@
+Deployed Link: https://task-smalblu.onrender.com
+
 ### Installation Instructions:
 
 1. **Clone the Repository:**
