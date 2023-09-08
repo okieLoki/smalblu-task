@@ -36,7 +36,7 @@ app.use('/api/currency', currencyRoute)
 
 
 // cron
-const cronJob = cron.schedule('*/1 * * * *', async () => {
+const cronJob = cron.schedule('0 0 * * *', async () => {
     try {
         await fetchAndStoreHistoricalRates();
         await deleteHistoricalRates();
