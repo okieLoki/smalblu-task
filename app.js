@@ -20,7 +20,12 @@ dbConnection().catch(err => console.log(err))
 const limiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
     max: 100,
-    message: 'You have exceeded the 100 requests in 24 hrs limit!',
+    message: ()=>{
+        return {
+            success: false,
+            message: 'You have exceeded the 100 requests in 24 hrs limit!'
+        }
+    },
 })
 
 app.use('/api/', limiter)

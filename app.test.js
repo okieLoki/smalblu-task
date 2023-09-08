@@ -49,6 +49,7 @@ describe('User Testing', () => {
     });
 });
 
+
 describe('Currency Testing', () => {
     let agent
 
@@ -103,3 +104,44 @@ describe('Currency Testing', () => {
             .send({ email: 'test@example.com', password: 'password123' });
     });
 });
+
+describe('Rate Limiter Testing', () => {
+    let agent;
+
+    beforeAll(async () => {
+        agent = request.agent(app);
+
+        await agent
+            .post('/api/user/register')
+            .send({ email: 'test@example.com', password: 'password123' });
+
+        await agent
+            .post('/api/user/login')
+            .send({ email: 'test@example.com', password: 'password123' });
+
+    });
+
+    it('should return 429 status code', async () => {
+        const requestPromises = [];
+
+
+        for (let i = 0; i < 100; i++) {
+            requestPromises.push(agent.get('/api/currency/convert?from=USD&to=EUR&amount=1'));
+        }
+       
+        const responses = await Promise.all(requestPromises);
+
+        const lastResponse = responses[responses.length - 1];
+        expect(lastResponse.status).toBe(429);
+        expect(lastResponse.body.success).toBe(false);
+        expect(lastResponse.body.message).toBe('You have exceeded the 100 requests in 24 hrs limit!');
+    });
+
+    
+    afterAll(async () => {
+        await agent
+            .delete('/api/user/delete')
+            .send({ email: 'test@example.com', password: 'password123' });
+    });
+});
+

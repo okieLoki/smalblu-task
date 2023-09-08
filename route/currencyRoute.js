@@ -6,7 +6,7 @@ const { currencyConvert, liveRates, historicalRates } = require('../controller/c
 
 router.get('/convert', auth, currencyConvert);
 router.get('/live', auth, liveRates)
-router.get('/historical', auth, historicalRates)
+router.get('/historical', historicalRates)
 
 module.exports = router;
 

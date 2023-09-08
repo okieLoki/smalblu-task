@@ -27,6 +27,7 @@
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0",
+    "nock": "^13.3.3",
     "node-cron": "^3.0.2"
   }
 }
